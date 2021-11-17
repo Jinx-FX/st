@@ -198,7 +198,9 @@ static MouseShortcut mshortcuts[] = {
  * alt+o:向上滚动一行，ctrl+alt+o:向上滚动一页
  * alt+i:向下滚动一行，ctrl+alt+i:向下滚动一页
  * ctrl+shift+c:复制;ctrl+shift+v:粘贴
+ * alt+l:高亮并选中链接url
  */
+
 static Shortcut shortcuts[] = {
 	/* mask                 keysym          function        argument */
 	{ XK_ANY_MOD,           XK_Break,       sendbreak,      {.i =  0} },
@@ -217,7 +219,9 @@ static Shortcut shortcuts[] = {
 	{ MODKEY,               XK_i,           kscrolldown,    {.i =  1} },
     { MODKEY|ControlMask,   XK_o,           kscrollup,      {.i = -1} },
     { MODKEY|ControlMask,   XK_i,           kscrolldown,    {.i = -1} },
+	{ MODKEY,               XK_l,           copyurl,        {.i =  0} },
 };
+
 /*
  * Special keys (change & recompile st.info accordingly)
  *
