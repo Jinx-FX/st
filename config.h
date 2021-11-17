@@ -194,10 +194,10 @@ static MouseShortcut mshortcuts[] = {
 #define MODKEY Mod1Mask /*alt*/
 #define TERMMOD (ControlMask|ShiftMask) /* ctrl and shift */
 /*
- * XK 为 alt 键位
+ * XK 为 前面的 mask 键位
  * alt+o:向上滚动一行，ctrl+alt+o:向上滚动一页
  * alt+i:向下滚动一行，ctrl+alt+i:向下滚动一页
- * alt+c:复制;alt+v:粘贴
+ * ctrl+shift+c:复制;ctrl+shift+v:粘贴
  */
 static Shortcut shortcuts[] = {
 	/* mask                 keysym          function        argument */
