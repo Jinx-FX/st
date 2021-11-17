@@ -195,14 +195,26 @@ static MouseShortcut mshortcuts[] = {
 #define TERMMOD (ControlMask|ShiftMask) /* ctrl and shift */
 /*
  * XK 为 前面的 mask 键位
- * alt+o:向上滚动一行，ctrl+alt+o:向上滚动一页
- * alt+i:向下滚动一行，ctrl+alt+i:向下滚动一页
+ * alt+k:向上滚动一行，ctrl+alt+k:向上滚动一页
+ * alt+j:向下滚动一行，ctrl+alt+j:向下滚动一页
  * ctrl+shift+c:复制;ctrl+shift+v:粘贴
  * alt+l:高亮并选中链接url
  */
 
+// from @LukeSmithxyz
+static char *openurlcmd[] = { "/bin/sh", "-c",
+    "sed 's/.*│//g' | tr -d '\n' | grep -aEo '(((http|https)://|www\\.)[a-zA-Z0-9.]*[:]?[a-zA-Z0-9./&%?#=_-]*)|((magnet:\\?xt=urn:btih:)[a-zA-Z0-9]*)'| uniq | sed 's/^www./http:\\/\\/www\\./g' | dmenu -i -p 'Follow which url?' -l 10 | xargs -r xdg-open",
+    "externalpipe", NULL };
+static char *copyurlcmd[] = { "/bin/sh", "-c",
+    "sed 's/.*│//g' | tr -d '\n' | grep -aEo '(((http|https)://|www\\.)[a-zA-Z0-9.]*[:]?[a-zA-Z0-9./&%?#=_-]*)|((magnet:\\?xt=urn:btih:)[a-zA-Z0-9]*)' | uniq | sed 's/^www./http:\\/\\/www\\./g' | dmenu -i -p 'Copy which url?' -l 10 | tr -d '\n' | xclip -selection clipboard",
+    "externalpipe", NULL };
+static char *copyoutput[] = { "/bin/sh", "-c", "st-copyout", "externalpipe", NULL };
+
 static Shortcut shortcuts[] = {
 	/* mask                 keysym          function        argument */
+	{ Mod1Mask|ControlMask, XK_l,           externalpipe,   {.v = openurlcmd } },
+	{ Mod1Mask,             XK_y,           externalpipe,   {.v = copyurlcmd } },
+	{ Mod1Mask,             XK_o,           externalpipe,   {.v = copyoutput } },
 	{ XK_ANY_MOD,           XK_Break,       sendbreak,      {.i =  0} },
 	{ ControlMask,          XK_Print,       toggleprinter,  {.i =  0} },
 	{ ShiftMask,            XK_Print,       printscreen,    {.i =  0} },
@@ -215,10 +227,10 @@ static Shortcut shortcuts[] = {
 	{ TERMMOD,              XK_Y,           selpaste,       {.i =  0} },
 	{ ShiftMask,            XK_Insert,      selpaste,       {.i =  0} },
 	{ TERMMOD,              XK_Num_Lock,    numlock,        {.i =  0} },
-    { MODKEY,               XK_o,           kscrollup,      {.i =  1} },
-	{ MODKEY,               XK_i,           kscrolldown,    {.i =  1} },
-    { MODKEY|ControlMask,   XK_o,           kscrollup,      {.i = -1} },
-    { MODKEY|ControlMask,   XK_i,           kscrolldown,    {.i = -1} },
+    { MODKEY,               XK_k,           kscrollup,      {.i =  1} },
+	{ MODKEY,               XK_j,           kscrolldown,    {.i =  1} },
+    { MODKEY|ControlMask,   XK_k,           kscrollup,      {.i = -1} },
+    { MODKEY|ControlMask,   XK_j,           kscrolldown,    {.i = -1} },
 	{ MODKEY,               XK_l,           copyurl,        {.i =  0} },
 };
 
