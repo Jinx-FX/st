@@ -191,9 +191,14 @@ static MouseShortcut mshortcuts[] = {
 };
 
 /* Internal keyboard shortcuts. */
-#define MODKEY Mod1Mask
-#define TERMMOD (ControlMask|ShiftMask)
-
+#define MODKEY Mod1Mask /*alt*/
+#define TERMMOD (ControlMask|ShiftMask) /* ctrl and shift */
+/*
+ * XK 为 alt 键位
+ * alt+o:向上滚动一行，ctrl+alt+o:向上滚动一页
+ * alt+i:向下滚动一行，ctrl+alt+i:向下滚动一页
+ * alt+c:复制;alt+v:粘贴
+ */
 static Shortcut shortcuts[] = {
 	/* mask                 keysym          function        argument */
 	{ XK_ANY_MOD,           XK_Break,       sendbreak,      {.i =  0} },
@@ -203,13 +208,16 @@ static Shortcut shortcuts[] = {
 	{ TERMMOD,              XK_Prior,       zoom,           {.f = +1} },
 	{ TERMMOD,              XK_Next,        zoom,           {.f = -1} },
 	{ TERMMOD,              XK_Home,        zoomreset,      {.f =  0} },
-	{ TERMMOD,              XK_C,           clipcopy,       {.i =  0} },
+    { TERMMOD,              XK_C,           clipcopy,       {.i =  0} },
 	{ TERMMOD,              XK_V,           clippaste,      {.i =  0} },
 	{ TERMMOD,              XK_Y,           selpaste,       {.i =  0} },
 	{ ShiftMask,            XK_Insert,      selpaste,       {.i =  0} },
 	{ TERMMOD,              XK_Num_Lock,    numlock,        {.i =  0} },
+    { MODKEY,               XK_o,           kscrollup,      {.i =  1} },
+	{ MODKEY,               XK_i,           kscrolldown,    {.i =  1} },
+    { MODKEY|ControlMask,   XK_o,           kscrollup,      {.i = -1} },
+    { MODKEY|ControlMask,   XK_i,           kscrolldown,    {.i = -1} },
 };
-
 /*
  * Special keys (change & recompile st.info accordingly)
  *
